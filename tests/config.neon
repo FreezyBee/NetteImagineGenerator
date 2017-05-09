@@ -1,0 +1,22 @@
+extensions:
+    imagineGenerator: FreezyBee\NetteImagineGenerator\DI\ImagineGeneratorExtension
+
+application:
+    catchExceptions: false
+
+services:
+    routerFactory: FreezyBee\NetteImagineGenerator\Tests\Mock\RouteFactoryMock
+    router:
+        factory: @routerFactory::createRouter
+
+    presenterMock: FreezyBee\NetteImagineGenerator\Tests\Mock\PresenterMock
+
+imagineGenerator:
+    routes:
+        - '/generated/<id>--<crop crop>.<extension>'
+        - '/generated/<namespace>/<id>--<width [0-9]+>x<height [0-9]+>.<extension>'
+        - '/generated/<namespace>/<id>--<width [0-9]+>.<extension>'
+        - '/generated/<namespace>/<id>.<extension>'
+    providers:
+        - FreezyBee\NetteImagineGenerator\Tests\Mock\CropProviderMock
+        - FreezyBee\NetteImagineGenerator\Tests\Mock\CopyProviderMock
