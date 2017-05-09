@@ -19,7 +19,7 @@
   ],
   "require": {
     "php": "~7.1",
-    "imagine/imagine": "^0.6",
+    "imagine/imagine": "^0.7",
     "latte/latte": "~2.4",
     "nette/di": "~2.4",
     "nette/application": "~2.4"
