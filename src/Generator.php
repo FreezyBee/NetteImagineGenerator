@@ -26,6 +26,9 @@ class Generator
 {
     use SmartObject;
 
+    /** @var string[] */
+    private static $formats = ['jpeg', 'jpg', 'gif', 'png', 'wbmp', 'xbm'];
+
     /** @var string */
     private $wwwDir;
 
@@ -87,7 +90,10 @@ class Generator
 
         try {
             $image->save($destination, $provider->getImagineSaveOptions($imageRequest));
-            $image->show('jpg');
+
+            $format = strtolower($imageRequest->getExtension());
+            $format = in_array($format, self::$formats, true) ? $format : 'jpg';
+            $image->show($format);
         } catch (RuntimeException $e) {
             $this->response->setCode(IResponse::S404_NOT_FOUND);
             Debugger::log($e, Debugger::EXCEPTION);
