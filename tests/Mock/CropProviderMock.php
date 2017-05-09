@@ -28,6 +28,20 @@ class CropProviderMock implements ImageProviderInterface
     public $used = false;
 
     /**
+     * @var string
+     */
+    private $appDir;
+
+    /**
+     * CropProviderMock constructor.
+     * @param string $appDir
+     */
+    public function __construct(string $appDir)
+    {
+        $this->appDir = $appDir;
+    }
+
+    /**
      * @param ImagineRequest $request
      * @return ImageInterface|null
      */

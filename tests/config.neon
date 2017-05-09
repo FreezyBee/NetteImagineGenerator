@@ -18,5 +18,5 @@ imagineGenerator:
         - '/generated/<namespace>/<id>--<width [0-9]+>.<extension>'
         - '/generated/<namespace>/<id>.<extension>'
     providers:
-        - FreezyBee\NetteImagineGenerator\Tests\Mock\CropProviderMock
+        - FreezyBee\NetteImagineGenerator\Tests\Mock\CropProviderMock(%appDir%)
         - FreezyBee\NetteImagineGenerator\Tests\Mock\CopyProviderMock

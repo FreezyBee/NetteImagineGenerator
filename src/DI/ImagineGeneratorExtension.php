@@ -14,6 +14,7 @@ use FreezyBee\NetteImagineGenerator\Http\ImagineRoute;
 use FreezyBee\NetteImagineGenerator\Latte\Macros;
 use Nette\DI\CompilerExtension;
 use Nette\DI\Helpers;
+use Nette\DI\Statement;
 use Nette\InvalidArgumentException;
 
 /**
@@ -61,8 +62,15 @@ class ImagineGeneratorExtension extends CompilerExtension
         // register providers
         foreach ($providers as $name => $providerClassName) {
             $provider = $container->addDefinition($this->prefix('provider.' . $name))
-                ->setClass($providerClassName)
                 ->setAutowired(false);
+
+            if ($providerClassName instanceof Statement) {
+                $provider
+                    ->setClass($providerClassName->getEntity())
+                    ->setArguments($providerClassName->arguments);
+            } else {
+                $provider->setClass($providerClassName);
+            }
 
             $generator->addSetup('addProvider', [$provider]);
         }
