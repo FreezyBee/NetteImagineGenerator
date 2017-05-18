@@ -12,15 +12,18 @@ namespace FreezyBee\NetteImagineGenerator\DI;
 use FreezyBee\NetteImagineGenerator\Generator;
 use FreezyBee\NetteImagineGenerator\Http\ImagineRoute;
 use FreezyBee\NetteImagineGenerator\Latte\Macros;
+use FreezyBee\PrependRoute\DI\IPrependRouteProvider;
+use FreezyBee\PrependRoute\DI\PrependRouteExtension;
 use Nette\DI\CompilerExtension;
 use Nette\DI\Helpers;
+use Nette\DI\MissingServiceException;
 use Nette\DI\Statement;
 use Nette\InvalidArgumentException;
 
 /**
  * @author Jakub Janata <jakubjanata@gmail.com>
  */
-class ImagineGeneratorExtension extends CompilerExtension
+class ImagineGeneratorExtension extends CompilerExtension implements IPrependRouteProvider
 {
     /** @var array */
     private static $defaults = [
@@ -29,7 +32,13 @@ class ImagineGeneratorExtension extends CompilerExtension
         'wwwDir' => '%wwwDir%',
     ];
 
-    public function loadConfiguration()
+    /** @var array */
+    private $routeDefs = [];
+
+    /**
+     *
+     */
+    public function loadConfiguration(): void
     {
         $container = $this->getContainerBuilder();
         $config = $this->validateConfig(Helpers::expand(self::$defaults, $container->parameters));
@@ -44,19 +53,21 @@ class ImagineGeneratorExtension extends CompilerExtension
             throw new InvalidArgumentException(__CLASS__ . ': You have to register some providers and routes');
         }
 
+        if (!$this->compiler->getExtensions(PrependRouteExtension::class)) {
+            throw new MissingServiceException('You must register PrependRouteExtension');
+        }
+
         $generator = $container->addDefinition($this->prefix('generator'))
             ->setClass(Generator::class, [$config['wwwDir']]);
 
-
-        $router = $container->getDefinition('router');
-
         // register routes
         foreach ($routes as $route => $mask) {
-            $def = $container->addDefinition($this->prefix('route.' . $route))
+            $serviceName = $this->prefix('route.' . $route);
+            $container->addDefinition($serviceName)
                 ->setClass(ImagineRoute::class, [$mask, $this->prefix('@generator')])
                 ->setAutowired(false);
 
-            $router->addSetup('$service[] = ?', [$def]);
+            $this->routeDefs[] = $serviceName;
         }
 
         // register providers
@@ -78,5 +89,13 @@ class ImagineGeneratorExtension extends CompilerExtension
         // register macros
         $latte = $container->getDefinition('nette.latteFactory');
         $latte->addSetup(Macros::class . '::install(?->getCompiler())', ['@self']);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getPrependRoutes(): array
+    {
+        return $this->routeDefs;
     }
 }

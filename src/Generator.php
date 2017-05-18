@@ -58,7 +58,7 @@ class Generator
     /**
      * @param ImageProviderInterface $provider
      */
-    public function addProvider(ImageProviderInterface $provider)
+    public function addProvider(ImageProviderInterface $provider): void
     {
         $this->providers[] = $provider;
     }
@@ -67,7 +67,7 @@ class Generator
      * @param ImagineRequest $imageRequest
      * @throws BadRequestException
      */
-    public function generateImage(ImagineRequest $imageRequest)
+    public function generateImage(ImagineRequest $imageRequest): void
     {
         /** @var ImageProviderInterface $provider */
         $provider = null;

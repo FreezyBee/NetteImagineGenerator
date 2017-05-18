@@ -20,6 +20,7 @@
   "require": {
     "php": "~7.1",
     "imagine/imagine": "^0.7",
+    "freezy-bee/prepend-route": "~1.0",
     "latte/latte": "~2.4",
     "nette/di": "~2.4",
     "nette/application": "~2.4"

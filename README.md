@@ -17,6 +17,7 @@ With Nette `2.4` and newer, you can enable the extension using your neon config.
 
 ```yml
 extensions:
+    prependRoute: FreezyBee\PrependRoute\DI\PrependRouteExtension
 	imagineGenerator: FreezyBee\NetteImagineGenerator\DI\ImagineGeneratorExtension
 
 imagineGenerator:

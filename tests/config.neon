@@ -1,4 +1,5 @@
 extensions:
+    prependRoute: FreezyBee\PrependRoute\DI\PrependRouteExtension
     imagineGenerator: FreezyBee\NetteImagineGenerator\DI\ImagineGeneratorExtension
 
 application:
