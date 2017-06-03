@@ -26,7 +26,7 @@ class ImagineRoute extends Route
     public function __construct(string $mask, Generator $generator)
     {
         parent::__construct($mask, function (MicroPresenter $presenter) use ($generator) {
-            $parameters = $presenter->getRequest()->getParameters();
+            $parameters = $presenter->getRequest() !== null ? $presenter->getRequest()->getParameters() : [];
             $generator->generateImage(new ImagineRequest(
                 $parameters['namespace'] ?? '',
                 $parameters['id'] ?? '',

@@ -25,6 +25,11 @@ class CopyProviderMock implements ImageProviderInterface
      */
     public function getImage(ImagineRequest $request): ?ImageInterface
     {
+        $request->getId();
+        $request->getNamespace();
+        $request->getWidth();
+        $request->getHeight();
+
         if ($request->getExtension() !== 'jpg') {
             return null;
         }
@@ -34,7 +39,7 @@ class CopyProviderMock implements ImageProviderInterface
     }
 
     /**
-     * @param \FreezyBee\NetteImagineGenerator\Http\ImagineRequest $request
+     * @param ImagineRequest $request
      * @return array
      */
     public function getImagineSaveOptions(ImagineRequest $request): array

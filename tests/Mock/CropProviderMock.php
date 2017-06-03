@@ -61,7 +61,7 @@ class CropProviderMock implements ImageProviderInterface
     }
 
     /**
-     * @param \FreezyBee\NetteImagineGenerator\Http\ImagineRequest $request
+     * @param ImagineRequest $request
      * @return array
      */
     public function getImagineSaveOptions(ImagineRequest $request): array

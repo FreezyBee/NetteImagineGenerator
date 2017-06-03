@@ -14,6 +14,7 @@ require __DIR__ . '/../bootstrap.php';
 use FreezyBee\NetteImagineGenerator\Tests\Mock\CropProviderMock;
 use Nette\Application\BadRequestException;
 use Nette\Application\Responses\TextResponse;
+use Nette\Application\Request as AppRequest;
 use Nette\Configurator;
 use Nette\DI\Container;
 use Nette\Http\Request;
@@ -109,7 +110,7 @@ class NetteImagineGeneratorTest extends TestCase
         $container = $this->initContainer();
 
         /** @var TextResponse $response */
-        $response = $container->getService('presenterMock')->run(new \Nette\Application\Request(''));
+        $response = $container->getService('presenterMock')->run(new AppRequest(''));
 
         ob_start();
         $response->getSource()->render();

@@ -82,7 +82,7 @@ class Generator
             }
         }
 
-        if (!$image) {
+        if ($image === null) {
             throw new BadRequestException;
         }
 

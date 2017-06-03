@@ -24,7 +24,7 @@ interface ImageProviderInterface
     public function getImage(ImagineRequest $request): ?ImageInterface;
 
     /**
-     * @param \FreezyBee\NetteImagineGenerator\Http\ImagineRequest $request
+     * @param ImagineRequest $request
      * @return array
      */
     public function getImagineSaveOptions(ImagineRequest $request): array;
