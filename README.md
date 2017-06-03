@@ -4,21 +4,24 @@ Quickstart
 [![Build Status](https://travis-ci.org/FreezyBee/NetteImagineGenerator.svg?branch=master)](https://travis-ci.org/FreezyBee/NetteImagineGenerator)
 [![Coverage Status](https://coveralls.io/repos/github/FreezyBee/NetteImagineGenerator/badge.svg?branch=master)](https://coveralls.io/github/FreezyBee/NetteImagineGenerator?branch=master)
 
-Installation
+Requirements
 ------------
 
-The best way to install FreezyBee/NetteImagineGenerator is using  [Composer](http://getcomposer.org/):
+- PHP 7.1+
+- Nette 2.4+
+- FreezyBee/PrependRoute
+
+Installation
+------------
 
 ```sh
 $ composer require freezy-bee/nette-imagine-generator
 ```
 
-With Nette `2.4` and newer, you can enable the extension using your neon config.
-
 ```yml
 extensions:
     prependRoute: FreezyBee\PrependRoute\DI\PrependRouteExtension
-	imagineGenerator: FreezyBee\NetteImagineGenerator\DI\ImagineGeneratorExtension
+    imagineGenerator: FreezyBee\NetteImagineGenerator\DI\ImagineGeneratorExtension
 
 imagineGenerator:
     routes:
@@ -29,4 +32,22 @@ imagineGenerator:
     providers:
         - App\ImageProviders\CopyProviderMock
 
+```
+
+Usage
+-----
+
+Image MUST implements `FreezyBee\NetteImagineGenerator\RequestedImagineInterface`.
+
+```html
+    <!-- using n:macro -->
+    <!-- image, [width], [height], [params...] -->
+    <img n:src="$image">
+    <img n:src="$image, 100">
+    <img n:src="$image, 100, 200">
+    <img n:src="$image, 100, 200, crop => crop">
+    <img n:src="$image, param => ok">
+    
+    <!-- using classic macro -->
+    <meta content="{linkSrc $image}">
 ```
