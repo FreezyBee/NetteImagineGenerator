@@ -3,6 +3,7 @@ extensions:
     imagineGenerator: FreezyBee\NetteImagineGenerator\DI\ImagineGeneratorExtension
 
 application:
+    scanDirs: false
     catchExceptions: false
 
 services:

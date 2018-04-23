@@ -30,6 +30,9 @@ class Macros extends MacroSet
         $me->addMacro('src', null, null, function (MacroNode $node, PhpWriter $writer) use ($me) {
             return ' ?> src="<?php ' . $me->macroSrc($node, $writer) . ' ?>"<?php ';
         });
+        $me->addMacro('srcset', null, null, function (MacroNode $node, PhpWriter $writer) use ($me) {
+            return ' ?> srcset="<?php ' . $me->macroSrc($node, $writer) . ' ?>"<?php ';
+        });
     }
 
     /**
