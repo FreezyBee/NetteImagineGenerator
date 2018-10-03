@@ -22,6 +22,6 @@ class RouteFactoryMock
      */
     public function createRouter(): IRouter
     {
-        return new RouteList;
+        return new RouteList();
     }
 }

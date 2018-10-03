@@ -83,7 +83,7 @@ class Generator
         }
 
         if ($image === null) {
-            throw new BadRequestException;
+            throw new BadRequestException();
         }
 
         $destination = $this->wwwDir . $this->request->getUrl()->getPath();

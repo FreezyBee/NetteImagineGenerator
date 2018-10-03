@@ -34,7 +34,7 @@ class CopyProviderMock implements ImageProviderInterface
             return null;
         }
 
-        $image = new Imagine;
+        $image = new Imagine();
         return $image->open('http://fakeimg.pl/350x200/?text=Hello');
     }
 

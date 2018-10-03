@@ -26,8 +26,8 @@ class PresenterMock extends Presenter
         $template = $this->getTemplate();
         $template->setFile(__DIR__ . '/template/file.latte');
         $template->setParameters([
-            'file' => new RequestedImagineMock,
-            'fileWithoutNamespace' => new RequestedImagineWithoutNamespaceMock
+            'file' => new RequestedImagineMock(),
+            'fileWithoutNamespace' => new RequestedImagineWithoutNamespaceMock()
         ]);
     }
 }

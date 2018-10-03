@@ -54,7 +54,7 @@ class CropProviderMock implements ImageProviderInterface
 
         $this->used = true;
 
-        $image = new Imagine;
+        $image = new Imagine();
         return $image
             ->open('http://fakeimg.pl/350x200/?text=Hello')
             ->crop(new Point(0, 0), new Box(10, 10));
