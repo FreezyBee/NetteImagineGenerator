@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 /*
@@ -25,7 +26,7 @@ interface ImageProviderInterface
 
     /**
      * @param ImagineRequest $request
-     * @return array
+     * @return mixed[]
      */
     public function getImagineSaveOptions(ImagineRequest $request): array;
 }

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 /*
@@ -60,10 +61,6 @@ class CropProviderMock implements ImageProviderInterface
             ->crop(new Point(0, 0), new Box(10, 10));
     }
 
-    /**
-     * @param ImagineRequest $request
-     * @return array
-     */
     public function getImagineSaveOptions(ImagineRequest $request): array
     {
         return ['jpeg_quality' => 50];

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 /*
@@ -38,10 +39,6 @@ class CopyProviderMock implements ImageProviderInterface
         return $image->open('http://fakeimg.pl/350x200/?text=Hello');
     }
 
-    /**
-     * @param ImagineRequest $request
-     * @return array
-     */
     public function getImagineSaveOptions(ImagineRequest $request): array
     {
         return ['jpeg_quality' => 50];

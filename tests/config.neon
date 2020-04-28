@@ -1,6 +1,6 @@
 extensions:
     prependRoute: FreezyBee\PrependRoute\DI\PrependRouteExtension
-    imagineGenerator: FreezyBee\NetteImagineGenerator\DI\ImagineGeneratorExtension
+    imagineGenerator: FreezyBee\NetteImagineGenerator\DI\ImagineGeneratorExtension(%wwwDir%)
 
 application:
     scanDirs: false

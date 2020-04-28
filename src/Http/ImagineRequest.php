@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 /*
@@ -33,7 +34,7 @@ class ImagineRequest
     /** @var int|null */
     private $height;
 
-    /** @var array */
+    /** @var mixed[] */
     private $parameters;
 
     /**
@@ -42,7 +43,7 @@ class ImagineRequest
      * @param string $extension
      * @param int|null $width
      * @param int|null $height
-     * @param array $parameters
+     * @param mixed[] $parameters
      */
     public function __construct(
         ?string $namespace,
@@ -102,7 +103,7 @@ class ImagineRequest
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
     public function getParameters(): array
     {

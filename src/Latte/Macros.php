@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 /*
@@ -25,7 +26,7 @@ class Macros extends MacroSet
      */
     public static function install(Compiler $compiler): void
     {
-        $me = new static($compiler);
+        $me = new self($compiler);
         $me->addMacro('linkSrc', [$me, 'macroSrc']);
         $me->addMacro('src', null, null, function (MacroNode $node, PhpWriter $writer) use ($me) {
             return ' ?> src="<?php ' . $me->macroSrc($node, $writer) . ' ?>"<?php ';
@@ -44,15 +45,13 @@ class Macros extends MacroSet
      */
     public function macroSrc(MacroNode $node, PhpWriter $writer): string
     {
-        $abs = strpos($node->args, '//') === 0 ? '//' : '';
-        $args = $abs ? substr($node->args, 2) : $node->args;
-        return $writer->write('echo %escape(%modify($this->global->uiPresenter->link("' . $abs . ':Nette:Micro:",' .
-            ' FreezyBee\NetteImagineGenerator\Latte\Macros::prepareArguments([' . $args . ']))))');
+        return $writer->write('echo %escape(%modify($this->global->uiPresenter->link(":Nette:Micro:",' .
+            ' FreezyBee\NetteImagineGenerator\Latte\Macros::prepareArguments(%node.array))))');
     }
 
     /**
-     * @param array $arguments
-     * @return array
+     * @param mixed[] $arguments
+     * @return mixed[]
      */
     public static function prepareArguments(array $arguments): array
     {

@@ -3,8 +3,6 @@
   "license": "MIT",
   "type": "library",
   "description": "Image Imagine generator for Nette Framework",
-  "minimum-stability": "dev",
-  "prefer-stable": true,
   "keywords": [
     "nette",
     "imagine"
@@ -16,8 +14,8 @@
     }
   ],
   "require": {
-    "php": "~7.1",
-    "imagine/imagine": "^0.7 || ^1.0",
+    "php": "~7.2",
+    "imagine/imagine": "^1.0",
     "freezy-bee/prepend-route": "~1.0",
     "latte/latte": "~2.4",
     "nette/di": "~2.4",
@@ -25,10 +23,10 @@
   },
   "require-dev": {
     "nette/bootstrap": "~2.4",
-    "tracy/tracy": "~2.4",
+    "tracy/tracy": "~2.6",
     "nette/tester": "~2.0",
     "squizlabs/php_codesniffer": "^3.0",
-    "phpstan/phpstan-shim": "^0.10"
+    "phpstan/phpstan": "^0.12"
   },
   "autoload": {
     "psr-4": {

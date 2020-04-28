@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 /*
@@ -20,7 +21,7 @@ class PresenterMock extends Presenter
     /**
      *
      */
-    public function actionDefault()
+    public function actionDefault(): void
     {
         /** @var Template $template */
         $template = $this->getTemplate();

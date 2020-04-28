@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 /*
@@ -15,7 +16,6 @@ use FreezyBee\NetteImagineGenerator\Latte\Macros;
 use FreezyBee\PrependRoute\DI\IPrependRouteProvider;
 use FreezyBee\PrependRoute\DI\PrependRouteExtension;
 use Nette\DI\CompilerExtension;
-use Nette\DI\Helpers;
 use Nette\DI\MissingServiceException;
 use Nette\DI\Statement;
 use Nette\InvalidArgumentException;
@@ -25,15 +25,16 @@ use Nette\InvalidArgumentException;
  */
 class ImagineGeneratorExtension extends CompilerExtension implements IPrependRouteProvider
 {
-    /** @var array */
-    private static $defaults = [
-        'routes' => [],
-        'providers' => [],
-        'wwwDir' => '%wwwDir%',
-    ];
+    /** @var string */
+    public $wwwDir;
 
-    /** @var array */
+    /** @var string[] */
     private $routeDefs = [];
+
+    public function __construct(string $wwwDir)
+    {
+        $this->wwwDir = $wwwDir;
+    }
 
     /**
      *
@@ -41,13 +42,12 @@ class ImagineGeneratorExtension extends CompilerExtension implements IPrependRou
     public function loadConfiguration(): void
     {
         $container = $this->getContainerBuilder();
-        $config = $this->validateConfig(Helpers::expand(self::$defaults, $container->parameters));
 
-        /** @var array $routes */
-        $routes = $config['routes'];
+        /** @var array<int|string, string> $routes */
+        $routes = $this->config['routes'];
 
-        /** @var array $providers */
-        $providers = $config['providers'];
+        /** @var array<int|string, string|Statement> $providers */
+        $providers = $this->config['providers'];
 
         if (!$providers || !$routes) {
             throw new InvalidArgumentException(__CLASS__ . ': You have to register some providers and routes');
@@ -58,13 +58,13 @@ class ImagineGeneratorExtension extends CompilerExtension implements IPrependRou
         }
 
         $generator = $container->addDefinition($this->prefix('generator'))
-            ->setClass(Generator::class, [$config['wwwDir']]);
+            ->setFactory(Generator::class, [$this->wwwDir]);
 
         // register routes
         foreach ($routes as $route => $mask) {
             $serviceName = $this->prefix('route.' . $route);
             $container->addDefinition($serviceName)
-                ->setClass(ImagineRoute::class, [$mask, $this->prefix('@generator')])
+                ->setFactory(ImagineRoute::class, [$mask, $this->prefix('@generator')])
                 ->setAutowired(false);
 
             $this->routeDefs[] = $serviceName;
@@ -76,11 +76,9 @@ class ImagineGeneratorExtension extends CompilerExtension implements IPrependRou
                 ->setAutowired(false);
 
             if ($providerClassName instanceof Statement) {
-                $provider
-                    ->setClass($providerClassName->getEntity())
-                    ->setArguments($providerClassName->arguments);
+                $provider->setFactory($providerClassName->getEntity(), $providerClassName->arguments);
             } else {
-                $provider->setClass($providerClassName);
+                $provider->setFactory($providerClassName);
             }
 
             $generator->addSetup('addProvider', [$provider]);
