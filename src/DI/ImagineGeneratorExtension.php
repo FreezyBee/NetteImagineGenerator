@@ -16,8 +16,9 @@ use FreezyBee\NetteImagineGenerator\Latte\Macros;
 use FreezyBee\PrependRoute\DI\IPrependRouteProvider;
 use FreezyBee\PrependRoute\DI\PrependRouteExtension;
 use Nette\DI\CompilerExtension;
+use Nette\DI\Definitions\FactoryDefinition;
+use Nette\DI\Definitions\Statement;
 use Nette\DI\MissingServiceException;
-use Nette\DI\Statement;
 use Nette\InvalidArgumentException;
 
 /**
@@ -43,11 +44,14 @@ class ImagineGeneratorExtension extends CompilerExtension implements IPrependRou
     {
         $container = $this->getContainerBuilder();
 
+        /** @var mixed $config */
+        $config = $this->config;
+
         /** @var array<int|string, string> $routes */
-        $routes = $this->config['routes'];
+        $routes = $config['routes'];
 
         /** @var array<int|string, string|Statement> $providers */
-        $providers = $this->config['providers'];
+        $providers = $config['providers'];
 
         if (!$providers || !$routes) {
             throw new InvalidArgumentException(__CLASS__ . ': You have to register some providers and routes');
@@ -76,6 +80,7 @@ class ImagineGeneratorExtension extends CompilerExtension implements IPrependRou
                 ->setAutowired(false);
 
             if ($providerClassName instanceof Statement) {
+                // @phpstan-ignore-next-line
                 $provider->setFactory($providerClassName->getEntity(), $providerClassName->arguments);
             } else {
                 $provider->setFactory($providerClassName);
@@ -85,8 +90,9 @@ class ImagineGeneratorExtension extends CompilerExtension implements IPrependRou
         }
 
         // register macros
+        /** @var FactoryDefinition $latte */
         $latte = $container->getDefinition('nette.latteFactory');
-        $latte->addSetup(Macros::class . '::install(?->getCompiler())', ['@self']);
+        $latte->getResultDefinition()->addSetup(Macros::class . '::install(?->getCompiler())', ['@self']);
     }
 
     /**

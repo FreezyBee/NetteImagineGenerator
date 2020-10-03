@@ -14,15 +14,15 @@
     }
   ],
   "require": {
-    "php": "~7.2",
+    "php": ">=7.3",
     "imagine/imagine": "^1.0",
-    "freezy-bee/prepend-route": "~1.0",
-    "latte/latte": "~2.4",
-    "nette/di": "~2.4",
-    "nette/application": "~2.4"
+    "freezy-bee/prepend-route": "^2.0",
+    "latte/latte": "~v2.8",
+    "nette/di": "~3.0",
+    "nette/application": "~3.0"
   },
   "require-dev": {
-    "nette/bootstrap": "~2.4",
+    "nette/bootstrap": "~3.0",
     "tracy/tracy": "~2.6",
     "nette/tester": "~2.0",
     "squizlabs/php_codesniffer": "^3.0",
